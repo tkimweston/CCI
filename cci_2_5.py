@@ -85,32 +85,24 @@ class SinglyLinkedList():
         runner.next = runner.next.next
 
 # optimized 2/15/21
+# 2/23/21: simplified while loop
 def sumList(a, b):
     pa = a.head
     pb = b.head
     new = SinglyLinkedList()
     carry = 0
-    while pa and pb:
-        sum = pa.val + pb.val + carry
+    while pa or pb or carry > 0:
+        sum = carry
+        if pa:
+            sum += pa.val
+        if pb:
+            sum += pb.val
         carry = sum // 10
         new.insertTail(sum % 10)
-        pa = pa.next
-        pb = pb.next
-
-    if pa:
-        while pa:
-            new.insertTail((pa.val + carry) % 10)
-            carry = (pa.val + carry) // 10
+        if pa:
             pa = pa.next
-
-    if pb:
-        while pb:
-            new.insertTail((pb.val + carry) % 10)
-            carry = (pb.val + carry) // 10
+        if pb:
             pb = pb.next
-
-    if carry:
-        new.insertTail(carry)
 
     return new
 
